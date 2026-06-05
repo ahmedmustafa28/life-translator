@@ -291,9 +291,59 @@ export default function HistoryPage() {
           {/* Results List */}
           {loading ? (
             <div className="space-y-4">
-              {[1, 2, 3].map((n) => (
-                <div key={n} className="h-24 w-full bg-slate-100 dark:bg-slate-900 rounded-xl animate-pulse" />
-              ))}
+              {/* Desktop Skeleton Table */}
+              <div className="hidden lg:block overflow-hidden border border-slate-200 dark:border-slate-800 rounded-xl bg-white/20 dark:bg-slate-950/20">
+                <div className="w-full text-left border-collapse">
+                  <div className="border-b border-slate-200 dark:border-slate-850 bg-slate-50/50 dark:bg-slate-900/50 flex py-3.5 px-6 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                    <div className="w-2/5">Document</div>
+                    <div className="w-1/10">Type</div>
+                    <div className="w-1/10">Risk Level</div>
+                    <div className="w-1/10">Status</div>
+                    <div className="w-1/10">Uploaded</div>
+                    <div className="w-1/10">Size</div>
+                    <div className="w-1/10 text-right">Actions</div>
+                  </div>
+                  {[1, 2, 3].map((n) => (
+                    <div key={n} className="flex py-4 px-6 items-center border-b border-slate-150 dark:border-slate-850">
+                      <div className="w-2/5 flex items-center space-x-3">
+                        <div className="h-9 w-9 rounded bg-slate-200 dark:bg-slate-800 animate-pulse shrink-0 animate-pulse-subtle" />
+                        <div className="space-y-2 w-full max-w-[180px]">
+                          <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-3/4" />
+                          <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-1/2" />
+                        </div>
+                      </div>
+                      <div className="w-1/10"><div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-16" /></div>
+                      <div className="w-1/10"><div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-16" /></div>
+                      <div className="w-1/10"><div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-20" /></div>
+                      <div className="w-1/10"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-16" /></div>
+                      <div className="w-1/10"><div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-12" /></div>
+                      <div className="w-1/10 flex justify-end"><div className="h-8 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-16" /></div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Mobile Skeleton Cards */}
+              <div className="block lg:hidden space-y-3">
+                {[1, 2, 3].map((n) => (
+                  <div key={n} className="p-5 border border-slate-200 dark:border-slate-850 bg-white/20 dark:bg-slate-950/20 rounded-xl space-y-3">
+                    <div className="flex items-center space-x-3">
+                      <div className="h-9 w-9 rounded bg-slate-200 dark:bg-slate-800 animate-pulse shrink-0 animate-pulse-subtle" />
+                      <div className="space-y-2 w-full">
+                        <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-2/3" />
+                        <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-1/3" />
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-16" />
+                      <div className="h-5 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-20" />
+                    </div>
+                    <div className="flex justify-between items-center pt-1">
+                      <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-12" />
+                      <div className="h-7 bg-slate-200 dark:bg-slate-800 rounded animate-pulse w-24" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ) : filteredAndSortedDocs.length === 0 ? (
             <Card className="border-dashed border-slate-200 dark:border-slate-800 py-16 text-center bg-white/20 dark:bg-slate-900/10">

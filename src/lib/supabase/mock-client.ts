@@ -182,7 +182,6 @@ export function getMockSupabaseClient(isBrowser: boolean) {
             return { data: null, error: new Error(result.error || 'Signup failed') }
           }
           const user = result.data
-          setCookie('sb-mock-user', JSON.stringify(user))
           return { data: { user }, error: null }
         } catch (err: any) {
           return { data: null, error: err }

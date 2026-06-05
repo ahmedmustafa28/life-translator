@@ -327,10 +327,10 @@ export default function DocumentDetails() {
               </div>
 
               {/* Tab Navigation (no-print) */}
-              <div className="flex border-b border-slate-200 dark:border-slate-800 space-x-4 no-print">
+              <div className="flex border-b border-slate-200 dark:border-slate-800 space-x-6 no-print overflow-x-auto scrollbar-none whitespace-nowrap scroll-smooth">
                 <button
                   onClick={() => setActiveTab('explanation')}
-                  className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
+                  className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 shrink-0 ${
                     activeTab === 'explanation'
                       ? 'border-indigo-600 text-indigo-650 dark:border-indigo-400 dark:text-indigo-400'
                       : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
@@ -341,7 +341,7 @@ export default function DocumentDetails() {
                 </button>
                 <button
                   onClick={() => setActiveTab('checklist')}
-                  className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
+                  className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 shrink-0 ${
                     activeTab === 'checklist'
                       ? 'border-indigo-600 text-indigo-650 dark:border-indigo-400 dark:text-indigo-400'
                       : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
@@ -353,7 +353,7 @@ export default function DocumentDetails() {
                 {fileUrl && (
                   <button
                     onClick={() => setActiveTab('original')}
-                    className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 ${
+                    className={`pb-3 text-sm font-semibold flex items-center gap-1.5 transition-all border-b-2 shrink-0 ${
                       activeTab === 'original'
                         ? 'border-indigo-600 text-indigo-650 dark:border-indigo-400 dark:text-indigo-400'
                         : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'

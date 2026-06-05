@@ -7,7 +7,7 @@ export function createClient() {
   const isPlaceholder = !supabaseUrl || supabaseUrl.includes('placeholder') || supabaseUrl.includes('dummy')
 
   if (isPlaceholder) {
-    return getMockSupabaseClient(false) as any
+    return getMockSupabaseClient(false, cookies()) as any
   }
 
   const cookieStore = cookies()

@@ -2,8 +2,19 @@ import { NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
-// Shared file path inside Next.js build folder
-const DB_FILE = path.join(process.cwd(), '.next', 'sb-mock-db.json')
+// Helper to find project root containing package.json
+function getProjectRoot() {
+  let dir = process.cwd()
+  while (dir && dir !== path.parse(dir).root) {
+    if (fs.existsSync(path.join(dir, 'package.json'))) {
+      return dir
+    }
+    dir = path.dirname(dir)
+  }
+  return process.cwd()
+}
+
+const DB_FILE = path.join(getProjectRoot(), 'sb-mock-db.json')
 
 // Helper to read database
 function readDb() {
@@ -52,7 +63,7 @@ export async function GET(request: Request) {
 
   if (table === 'users') {
     if (email) {
-      const user = db.users.find((u: any) => u.email === email)
+      const user = db.users.find((u: any) => u.email.toLowerCase() === email.toLowerCase())
       return NextResponse.json({ data: user || null })
     }
     return NextResponse.json({ data: db.users })
@@ -89,7 +100,7 @@ export async function POST(request: Request) {
   const db = readDb()
 
   if (table === 'users') {
-    const existing = db.users.find((u: any) => u.email === body.email)
+    const existing = db.users.find((u: any) => u.email.toLowerCase() === body.email.toLowerCase())
     if (existing) {
       return NextResponse.json({ error: 'User already exists' }, { status: 400 })
     }

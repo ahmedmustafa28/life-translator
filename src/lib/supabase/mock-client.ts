@@ -149,17 +149,23 @@ class MockQueryBuilder {
   }
 }
 
-export function getMockSupabaseClient(isBrowser: boolean) {
+export function getMockSupabaseClient(isBrowser: boolean, cookieStore?: any) {
   return {
     auth: {
       async getUser() {
-        const cookieVal = getCookie('sb-mock-user')
+        let cookieVal = null
+        if (isBrowser) {
+          cookieVal = getCookie('sb-mock-user')
+        } else if (cookieStore) {
+          const c = cookieStore.get('sb-mock-user')
+          cookieVal = c ? c.value : null
+        }
         if (!cookieVal) {
-          // If on server, check headers/cookies via other methods if needed, but return null safely
           return { data: { user: null }, error: null }
         }
         try {
-          const user = JSON.parse(cookieVal)
+          const decoded = cookieVal.startsWith('%') ? decodeURIComponent(cookieVal) : cookieVal
+          const user = JSON.parse(decoded)
           return { data: { user }, error: null }
         } catch {
           return { data: { user: null }, error: null }
@@ -190,7 +196,7 @@ export function getMockSupabaseClient(isBrowser: boolean) {
 
       async signInWithPassword({ email, password }: any) {
         try {
-          const res = await fetch(`/api/mock-db?table=users&email=${email}`)
+          const res = await fetch(`/api/mock-db?table=users&email=${encodeURIComponent(email)}`)
           const result = await res.json()
           const user = result.data
           if (!user || user.password !== password) {
@@ -213,10 +219,17 @@ export function getMockSupabaseClient(isBrowser: boolean) {
 
       onAuthStateChange(callback: (event: any, session: any) => void) {
         let session = null
-        const cookieVal = getCookie('sb-mock-user')
+        let cookieVal = null
+        if (isBrowser) {
+          cookieVal = getCookie('sb-mock-user')
+        } else if (cookieStore) {
+          const c = cookieStore.get('sb-mock-user')
+          cookieVal = c ? c.value : null
+        }
         if (cookieVal) {
           try {
-            session = { user: JSON.parse(cookieVal) }
+            const decoded = cookieVal.startsWith('%') ? decodeURIComponent(cookieVal) : cookieVal
+            session = { user: JSON.parse(decoded) }
           } catch {
             // Ignore
           }

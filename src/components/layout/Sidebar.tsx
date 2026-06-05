@@ -3,7 +3,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Upload } from 'lucide-react'
+import { LayoutDashboard, Upload, History } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export function Sidebar() {
@@ -12,6 +12,7 @@ export function Sidebar() {
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/dashboard/upload', label: 'Translate New', icon: Upload },
+    { href: '/dashboard/history', label: 'History', icon: History },
   ]
 
   return (

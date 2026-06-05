@@ -1,9 +1,16 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { getMockSupabaseClient } from './mock-client'
 
 export function createClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const isPlaceholder = !supabaseUrl || supabaseUrl.includes('placeholder') || supabaseUrl.includes('dummy')
+
+  if (isPlaceholder) {
+    return getMockSupabaseClient(false) as any
+  }
+
   const cookieStore = cookies()
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://dummy-url.supabase.co'
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy-key'
 
   return createServerClient(
@@ -20,9 +27,7 @@ export function createClient() {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // The `setAll` method can be called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
+            // Ignore
           }
         },
       },

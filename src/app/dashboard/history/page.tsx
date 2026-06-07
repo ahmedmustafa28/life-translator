@@ -15,7 +15,7 @@ import {
 import { formatBytes } from '@/lib/utils'
 
 export default function HistoryPage() {
-  const supabase = createClient()
+  const [supabase] = useState(() => createClient())
   const router = useRouter()
   
   const [documents, setDocuments] = useState<any[]>([])

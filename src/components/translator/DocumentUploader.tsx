@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { formatBytes } from '@/lib/utils'
 
 export function DocumentUploader() {
-  const supabase = createClient()
+  const [supabase] = useState(() => createClient())
   const router = useRouter()
 
   // Tabs: 'upload' | 'manual'

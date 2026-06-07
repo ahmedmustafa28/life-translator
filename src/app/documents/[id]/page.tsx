@@ -19,7 +19,7 @@ import {
 export default function DocumentDetails() {
   const params = useParams()
   const id = params.id as string
-  const supabase = createClient()
+  const [supabase] = useState(() => createClient())
   const router = useRouter()
 
   const [document, setDocument] = useState<any>(null)

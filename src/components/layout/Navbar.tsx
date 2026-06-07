@@ -8,7 +8,7 @@ import { FileText, LogOut, User, Menu, X, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 
 export function Navbar() {
-  const supabase = createClient()
+  const [supabase] = useState(() => createClient())
   const router = useRouter()
   const pathname = usePathname()
   const [user, setUser] = useState<any>(null)

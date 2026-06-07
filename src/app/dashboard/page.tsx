@@ -14,7 +14,7 @@ import {
 import { formatBytes } from '@/lib/utils'
 
 export default function Dashboard() {
-  const supabase = createClient()
+  const [supabase] = useState(() => createClient())
   const router = useRouter()
   const [documents, setDocuments] = useState<any[]>([])
   const [loading, setLoading] = useState(true)

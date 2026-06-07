@@ -1,9 +1,13 @@
 // Helper to get cookies in browser or fake them in node
 function getCookie(name: string): string | null {
   if (typeof window === 'undefined') return null
-  const value = `; ${document.cookie}`
-  const parts = value.split(`; ${name}=`)
-  if (parts.length === 2) return decodeURIComponent(parts.pop()!.split(';').shift()!)
+  const cookies = document.cookie.split(';')
+  for (let i = 0; i < cookies.length; i++) {
+    const c = cookies[i].trim()
+    if (c.startsWith(name + '=')) {
+      return decodeURIComponent(c.substring(name.length + 1))
+    }
+  }
   return null
 }
 
